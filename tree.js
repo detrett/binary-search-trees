@@ -99,8 +99,8 @@ export class Tree {
 
   find(value) {
     let currNode = this.root;
-    while(currNode.data !== value) {
-      if(value < currNode.data) {
+    while (currNode.data !== value) {
+      if (value < currNode.data) {
         currNode = currNode.left;
         continue;
       }
@@ -110,9 +110,15 @@ export class Tree {
   }
 
   levelOrder(callback) {
-    if(this.root === null) {
-      return
-    } 
+    if (this.root === null) {
+      return;
+    }
+
+    if (callback === null || callback === undefined) {
+      throw new Error(
+        "A callback is required: e.g. (node) => console.log(node.data)"
+      );
+    }
 
     const queue = [this.root];
     while (queue.length > 0) {
@@ -120,16 +126,60 @@ export class Tree {
 
       callback(currNode);
 
-      if(currNode.left !== null) queue.push(currNode.left);
-      if(currNode.right !== null) queue.push(currNode.right);
+      if (currNode.left !== null) queue.push(currNode.left);
+      if (currNode.right !== null) queue.push(currNode.right);
     }
   }
 
-  inOrder(callback) {}
+  inOrder(callback) {
+    if (callback === null || callback === undefined) {
+      throw new Error(
+        "A callback is required: e.g. (node) => console.log(node.data)"
+      );
+    }
+    this.inOrderHelper(this.root, callback);
+  }
 
-  preOrder(callback) {}
+  inOrderHelper(node, callback) {
+    if(node === null) return;
+
+    this.inOrderHelper(node.left, callback);
+    callback(node);
+    this.inOrderHelper(node.right, callback);
+  }
+
+  preOrder(callback) {
+    if (callback === null || callback === undefined) {
+      throw new Error(
+        "A callback is required: e.g. (node) => console.log(node.data)"
+      );
+    }
+    this.preOrderHelper(this.root, callback);
+  }
+
+  preOrderHelper(node, callback){
+    if(node === null) return;
+
+    callback(node);
+    this.preOrderHelper(node.left, callback);
+    this.preOrderHelper(node.right, callback);
+  }
 
   postOrder(callback) {
+    if (callback === null || callback === undefined) {
+      throw new Error(
+        "A callback is required: e.g. (node) => console.log(node.data)"
+      );
+    }
+    this.postOrderHelper(this.root, callback);
+  }
+
+  postOrderHelper(node, callback) {
+    if(node === null) return;
+
+    this.postOrderHelper(node.left, callback);
+    this.postOrderHelper(node.right, callback);
+    callback(node);
   }
 
   height(node) {}
@@ -139,8 +189,6 @@ export class Tree {
   isBalanced() {}
 
   rebalance() {}
-
-
 
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {

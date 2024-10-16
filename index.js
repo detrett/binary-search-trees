@@ -12,3 +12,9 @@ tree.prettyPrint(tree.root);
 console.log(tree.find(5))
 
 tree.levelOrder((node) => console.log(node.data));
+console.log("---------------------")
+tree.inOrder((node) => console.log(node.data));
+console.log("---------------------")
+tree.preOrder((node) => console.log(node.data));
+console.log("---------------------")
+tree.postOrder((node) => console.log(node.data));
