@@ -227,9 +227,37 @@ export class Tree {
     throw new Error("Node not found in the tree.");
   }
 
-  isBalanced() {}
+  isBalanced() {
+    return this.checkBalance(this.root) !== -1;
+  }
 
-  rebalance() {}
+  checkBalance(node) {
+    if (node === null) {
+      return 0;
+    }
+    const leftHeight = this.checkBalance(node.left);
+    if(leftHeight === -1) {
+      return -1
+    }
+
+    const rightHeight = this.checkBalance(node.right);
+    if(rightHeight === -1) {
+      return -1
+    }
+
+    if (Math.abs(leftHeight - rightHeight) > 1) {
+      return -1;
+    }
+
+    // Return height of the current node
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  rebalance() {
+    const sortedArray = [];
+    this.inOrder((node) => sortedArray.push(node.data));
+    this.root = this.sortedArrayToBST(sortedArray, 0, sortedArray.length - 1);
+  }
 
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
