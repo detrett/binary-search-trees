@@ -97,6 +97,51 @@ export class Tree {
     return node;
   }
 
+  find(value) {
+    let currNode = this.root;
+    while(currNode.data !== value) {
+      if(value < currNode.data) {
+        currNode = currNode.left;
+        continue;
+      }
+      currNode = currNode.right;
+    }
+    return currNode;
+  }
+
+  levelOrder(callback) {
+    if(this.root === null) {
+      return
+    } 
+
+    const queue = [this.root];
+    while (queue.length > 0) {
+      const currNode = queue.shift();
+
+      callback(currNode);
+
+      if(currNode.left !== null) queue.push(currNode.left);
+      if(currNode.right !== null) queue.push(currNode.right);
+    }
+  }
+
+  inOrder(callback) {}
+
+  preOrder(callback) {}
+
+  postOrder(callback) {
+  }
+
+  height(node) {}
+
+  depth(node) {}
+
+  isBalanced() {}
+
+  rebalance() {}
+
+
+
   prettyPrint(node, prefix = "", isLeft = true) {
     if (node === null) {
       return;

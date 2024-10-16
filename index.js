@@ -8,3 +8,7 @@ tree.insert(18);
 tree.prettyPrint(tree.root);
 tree.deleteItem(8);
 tree.prettyPrint(tree.root);
+
+console.log(tree.find(5))
+
+tree.levelOrder((node) => console.log(node.data));
