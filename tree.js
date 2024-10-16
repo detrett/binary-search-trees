@@ -141,7 +141,7 @@ export class Tree {
   }
 
   inOrderHelper(node, callback) {
-    if(node === null) return;
+    if (node === null) return;
 
     this.inOrderHelper(node.left, callback);
     callback(node);
@@ -157,8 +157,8 @@ export class Tree {
     this.preOrderHelper(this.root, callback);
   }
 
-  preOrderHelper(node, callback){
-    if(node === null) return;
+  preOrderHelper(node, callback) {
+    if (node === null) return;
 
     callback(node);
     this.preOrderHelper(node.left, callback);
@@ -175,16 +175,57 @@ export class Tree {
   }
 
   postOrderHelper(node, callback) {
-    if(node === null) return;
+    if (node === null) return;
 
     this.postOrderHelper(node.left, callback);
     this.postOrderHelper(node.right, callback);
     callback(node);
   }
 
-  height(node) {}
+  height(node) {
+    if (node === null) {
+      return 0;
+    }
+    return this.heightHelper(node, 0);
+  }
 
-  depth(node) {}
+  heightHelper(node, currHeight) {
+    if (node === null) {
+      return currHeight;
+    }
+
+    currHeight++;
+
+    // Recursively calculate the height of left and right subtrees
+    const leftHeight = this.heightHelper(node.left, currHeight);
+    const rightHeight = this.heightHelper(node.right, currHeight);
+
+    // Return the maximum of the two heights
+    return Math.max(leftHeight, rightHeight);
+  }
+
+  depth(node) {
+    if (node === null) {
+      throw new Error("Node cannot be null.");
+    }
+    if (node === this.root) {
+      return 0;
+    }
+    let currNode = this.root;
+    let depth = 0;
+
+    while (currNode !== null) {
+      if (node.data < currNode.data) {
+        currNode = currNode.left;
+        depth++;
+      } else if (node.data > currNode.data) {
+        currNode = currNode.right;
+        depth++;
+      } else return depth;
+    }
+    
+    throw new Error("Node not found in the tree.");
+  }
 
   isBalanced() {}
 

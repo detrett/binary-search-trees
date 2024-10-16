@@ -18,3 +18,6 @@ console.log("---------------------")
 tree.preOrder((node) => console.log(node.data));
 console.log("---------------------")
 tree.postOrder((node) => console.log(node.data));
+console.log("---------------------")
+console.log(tree.height(tree.root));
+console.log(tree.depth(tree.find(23)));
